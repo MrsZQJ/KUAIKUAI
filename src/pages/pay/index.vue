@@ -1,7 +1,7 @@
 <template>
   <div id="body">
     <div class="Commodity_Information">
-      <img src="../../../static/images/banner1.png" alt />
+      <!-- <img src="../../../static/images/banner1.png" alt /> -->
       <div class="CommodityText">
         <p>{{pname}}</p>
         <p>¥{{price}}</p>

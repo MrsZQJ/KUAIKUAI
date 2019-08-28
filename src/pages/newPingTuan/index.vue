@@ -16,12 +16,12 @@
       <p>拼团人数</p>
       <div class="box">
         <div>
-          <input type="text" v-model="people">
+          <input maxlength="4" type="text" placeholder="0" v-model="people">
           <i>|</i>
           <span>人</span>
         </div>
         <div>
-          <input type="text" v-model="price">
+          <input type="text" maxlength="4" placeholder="0" v-model="price">
           <i>|</i>
           <span>元</span>
         </div>
@@ -36,7 +36,7 @@
     <div class="border1px"></div>
     <div class="imgJia" @click="topimage">
       <img src="https://www.meifuyihao.com/public/uploads/images/图标/图标/xj_icon@2x.png" alt />    
-      <img class="imgtop" :src="top" v-for="top in topimgList"/>
+      <img class="imgtop" :src="top" v-for="(top,index) in topimgList" :key="index" />
       
     </div>
     
@@ -47,7 +47,7 @@
       <textarea placeholder="请输入服务详情" v-model="info"></textarea>
       <div class="fuwuImg" @click="fuwuimage">
         <img src="https://www.meifuyihao.com/public/uploads/images/图标/图标/xj_icon@2x.png" alt />
-        <img class="imgfuwu" :src="fuwu" v-for="fuwu in fuwuimgList" alt/>
+        <img class="imgfuwu" :src="fuwu" v-for="(fuwu,index) in fuwuimgList" :key="index"  />
       </div>
     </div>
     <div class="clear"></div>
@@ -104,8 +104,8 @@ export default {
       showEndTime: false, //是否显示结束时间选择框, 
       imgtop:'',
       imgfuwu:'',
-      people:0,
-      price:0,
+      people: NaN,
+      price: NaN,
       shopname:'',
       info:'',
       topimgList:[],
@@ -113,6 +113,10 @@ export default {
     };
   },
   methods: {
+    chanNum(){
+      console.log(11111111);
+      
+    },
   	name(e){
   		this.namePingTuan=e.target.detail.value
   	},
@@ -399,6 +403,10 @@ export default {
   transform: translate(-50%);
   top: 5px;
   font-size: 10px;
+}
+.box div input{
+  text-align: center;
+  width: 43px;
 }
 .pingtuanTop {
   width: 375px;

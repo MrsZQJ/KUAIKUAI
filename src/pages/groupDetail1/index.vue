@@ -8,14 +8,14 @@
       :duration="1000"
       indicator-active-color="#ffffff"
       circular
+      @change="asdf"
     >
       <block v-for="(item,index) in swipers" :key="index">
-        <navigator>
-          <swiper-item>
-            <img v-bind:src="item.imagesrc" />
-          </swiper-item>
-        </navigator>
-        
+        <!-- <navigator> -->
+        <swiper-item>
+          <img :src="item.imagesrc" mode='widthFix' />
+        </swiper-item>
+        <!-- </navigator> -->
       </block>
     </swiper>
     <!-- 购物街分享 -->
@@ -26,7 +26,11 @@
         <span>{{people}}人团</span>
       </div>
       <!-- <i-icon type="share" size="24" @click="handleOpen1" /> -->
-      <img src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/分享/fx_icon@2x.png" @click="handleOpen1" alt />
+      <img
+        src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/分享/fx_icon@2x.png"
+        @click="handleOpen1"
+        alt
+      />
     </div>
     <div class="clear"></div>
     <div class="serabble">
@@ -36,44 +40,54 @@
       </div>
       <div class="serabble_list">
         <div>
-          <img src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/ktct_icon@2x.png" alt />
+          <img
+            src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/ktct_icon@2x.png"
+            alt
+          />
           <p>开团/参团</p>
         </div>
         <div>
-          <img src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/fk_icon@2x.png" alt />
+          <img
+            src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/fk_icon@2x.png"
+            alt
+          />
           <p>付款</p>
         </div>
         <div>
-          <img src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/fk_icon@2x.png" alt />
+          <img
+            src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/fk_icon@2x.png"
+            alt
+          />
           <p>邀请好友</p>
         </div>
         <div>
-          <img src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/kt_icon@2x.png" alt />
+          <img
+            src="https://www.meifuyihao.com/public/uploads/images/小程序美达达图标/拼团详情/kt_icon@2x.png"
+            alt
+          />
           <p>成团</p>
         </div>
       </div>
     </div>
     <div class="clear"></div>
     <i-cell title="正在拼团的小伙伴" is-link only-tap-footer></i-cell>
-    
+
     <template v-for="(pink,index) in pinks" v-if="index<=1">
-    <div class="border1px"></div>
-    <div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img :src="pink.avatar" alt />
-        <span>{{pink.pname}}</span>
-        <i>{{pink.people}}人团</i>
+      <div class="border1px"></div>
+      <div class="serabblePeople">
+        <div class="serabblePeople_Left">
+          <img :src="pink.avatar" alt />
+          <span>{{pink.pname}}</span>
+          <i>{{pink.people}}人团</i>
+        </div>
+        <div class="serabblePeople_Right">{{pink.pink==1?'已成团':'未成团'}}</div>
       </div>
-      <div class="serabblePeople_Right">{{pink.pink==1?'已成团':'未成团'}}</div>
-    </div>
     </template>
-    
+
     <div class="clear"></div>
     <div class="datail">
       <p>服务详情</p>
-      <span>
-        {{serviceinfo}}
-      </span>
+      <span>{{serviceinfo}}</span>
     </div>
     <!--<div class="footFix">¥{{price}}</div>-->
     <i-action-sheet
@@ -99,7 +113,7 @@ export default {
         //   open_type: "navigate",
         //   goods_id: 129,
         //   navigator_url: "/pages/goods_detail/main?goods_id=129"
-        // }     
+        // }
       ],
       visible1: false,
       actions1: [
@@ -113,60 +127,57 @@ export default {
       ],
       addXiao: false,
       code: NaN,
-      serviceinfo:'',
-      pinks:[],
-      pid:0,
-      productid:0,
-      storeid:0,
-      price:0,
-      pname:"",
-      people:0
+      serviceinfo: "",
+      pinks: [],
+      pid: 0,
+      productid: 0,
+      storeid: 0,
+      price: 0,
+      pname: "",
+      people: 0
     };
   },
   created() {
     this.getLogin();
   },
   onLoad(options) {
-  	     //console.log(wx.getStorageSync('openid'))
-  	     var that=this;
-  	     that.swipers=[];
-  	     that.pid=options.pinkid;
-         this.$axios
-              .post("routine/Store/pink_detail", {
-                    'sid':wx.getStorageSync('sid'),id:options.pinkid
-                  })
-                  .then(function(response) {
-                    console.log(response);
-                    that.serviceinfo=response.data.data.storeInfo.info
-                    that.pinks=response.data.data.pink                                      
-                    that.price=response.data.data.storeInfo.price
-                    that.pname=response.data.data.storeInfo.pname
-                    that.people=response.data.data.storeInfo.people
-                    var pictures=response.data.data.storeInfo.picture
-                    var arr=pictures.split(",")
-                    for(var i=0;i<arr.length;i++){
-                    	 var obj=new Object()
-                    	 obj.imagesrc=arr[i]
-                    	 that.swipers.push(obj)
-                    }
-                                        
-                    //console.log(response.data.data.storeInfo.picture)                                                                       
-                  });
-                  //console.log(options.pinkid);
-           
+    //console.log(wx.getStorageSync('openid'))
+    var that = this;
+    that.pid = options.pinkid;
+    this.$axios
+      .post("routine/Store/pink_detail", {
+        sid: wx.getStorageSync("sid"),
+        id: options.pinkid
+      })
+      .then(function(response) {
+        console.log(response);
+        that.serviceinfo = response.data.data.storeInfo.info;
+        that.pinks = response.data.data.pink;
+        that.price = response.data.data.storeInfo.price;
+        that.pname = response.data.data.storeInfo.pname;
+        that.people = response.data.data.storeInfo.people;
+        var pictures = response.data.data.storeInfo.picture;
+        var arr = pictures.split(",");
+        for (var i = 0; i < arr.length; i++) {
+          var obj = new Object();
+          obj.imagesrc = arr[i];
+          that.swipers.push(obj);
+        }
+
+        //console.log(response.data.data.storeInfo.picture)
+      });
+    //console.log(options.pinkid);
   },
   methods: {
     getLogin() {
-    	    
-          
       wx.checkSession({
         success() {
-          //session_key 未过期，并且在本生命周期一直有效         
+          //session_key 未过期，并且在本生命周期一直有效
         },
         fail() {
           // session_key 已经失效，需要重新执行登录流程
-          var appId='wx07fe5775ac46e374';
-          var secret='2580adb6d939538a49dc45b79326d0a6';
+          var appId = "wx07fe5775ac46e374";
+          var secret = "2580adb6d939538a49dc45b79326d0a6";
           /*wx.login({
             success: res => {
               if (res.code) {
@@ -186,10 +197,9 @@ export default {
         }
       });
     },
-    goList(){
-    	 
-    	 wx.navigateTo({
-        url: "/pages/groupList/main?pid="+this.pid
+    goList() {
+      wx.navigateTo({
+        url: "/pages/groupList/main?pid=" + this.pid
       });
     },
     handleOpen1() {
@@ -205,7 +215,13 @@ export default {
     },
     goToPay() {
       wx.navigateTo({
-        url: "/pages/pay/main?storeid="+this.storeid+"&productid="+this.productid+"&price="+this.price
+        url:
+          "/pages/pay/main?storeid=" +
+          this.storeid +
+          "&productid=" +
+          this.productid +
+          "&price=" +
+          this.price
       });
     },
     handleClickItem(e) {
@@ -219,6 +235,35 @@ export default {
       setTimeout(() => {
         this.addXiao = false;
       }, 5000);
+    },
+    setContainerHeight(e) {
+      //图片的原始宽度
+      console.log(e);
+      
+      var imgWidth = e.detail.width;
+
+      //图片的原始高度
+      var imgHeight = e.detail.height;
+
+      //同步获取设备宽度
+      var sysInfo = wx.getSystemInfoSync();
+      console.log("sysInfo:", sysInfo);
+
+      //获取屏幕的宽度
+      var screenWidth = sysInfo.screenWidth;
+
+      //获取屏幕和原图的比例
+      var scale = screenWidth / imgWidth;
+
+      //设置容器的高度
+      this.setData({
+        height: imgHeight * scale
+      });
+      console.log(this.data.height);
+    },
+    asdf(e){
+      console.log(e);
+      
     }
   }
 };
@@ -245,12 +290,9 @@ export default {
   background-color: #ffffff;
 }
 swiper {
-  width: 750rpx;
-  height: 126px;
+  text-align: center;
 }
 swiper image {
-  width: 100%;
-  height: 100%;
 }
 .shopping > div {
   float: left;
@@ -364,7 +406,6 @@ swiper image {
   color: #ea6584;
   top: 23px;
   left: 130px;
-  
 }
 .serabblePeople .serabblePeople_Right {
   font-size: 14px;

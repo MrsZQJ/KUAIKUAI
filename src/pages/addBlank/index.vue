@@ -3,18 +3,18 @@
     <i-cell title="请填写提现银卡信息" label="为了您的资金安全，银行卡人姓名必须与实名认证姓名一致"></i-cell>
     <div class="border1px"></div>
     <i-input
-      v-model="username"
       title="持卡人"
       autofocus
       placeholder="请输入持卡人姓名"
       @change="name"
       maxlength="20"
     />
-    <i-input v-model="bankcode" title="银行卡" placeholder="请输入银行卡号" @change="code" maxlength="20" />
-    <i-input v-model="realname" title="银行名称" placeholder="请输入银行名称" @change="real" maxlength="20" />
-    <i-input v-model="address" title="开户地址" placeholder="请输入开户地址" @change="addr" maxlength="20" />
-    <i-input v-model="phone" title="手机号" placeholder="请输入手机号" @change="tel" maxlength="20" />
+    <i-input title="银行卡" placeholder="请输入银行卡号" @change="code" maxlength="20" />
+    <i-input title="银行名称" placeholder="请输入银行名称" @change="real" maxlength="20" />
+    <!-- <i-inpu title="开户地址" placeholder="请输入开户地址" @change="addr" maxlength="20" /> -->
+    <i-input title="手机号" placeholder="请输入手机号" @change="tel" maxlength="20" />
     <i-cell :title="msg" @click="chooseShen" is-link></i-cell>
+    <i-input placeholder="请输入详细地址" @change="addr" maxlength="20" />
     <!-- <span class="span">{{choose}}</span> -->
     <span class="fix" @click="submit">提交</span>
     <van-popup :show="blea" position="bottom" @close="onClose" :overlay="true">
@@ -38,6 +38,7 @@ export default {
       phone: '',
       address: "",
       choose: "",
+      detaikAddress:"",
       blea: false,
     };
   },
@@ -79,6 +80,8 @@ export default {
         this.address == "" ||
         this.realname == "" ||
         this.province == "" ||
+        this.city == "" ||
+        this.district == "" ||
         this.phone == 0
       ) {
         wx.showToast({

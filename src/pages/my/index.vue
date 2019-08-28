@@ -2,7 +2,7 @@
   <div id="body">
     <div class="touxiang">
       <img src="https://www.meifuyihao.com/public/uploads/images/user.png" alt />
-      <span>我的信息</span>
+      <span>{{name}}</span>
     </div>
     <div class="middle">
       <div class="box">
@@ -12,10 +12,10 @@
         </navigator>
       </div>
       <div class="box">
-        
+        <navigator url="/pages/tixianDetail/main">
           <p>{{extracting}}</p>
           <span>提现中(笔)</span>
-         
+        </navigator>
       </div>
       <div class="box">
         <navigator url="/pages/tixianDetail/main">
@@ -27,32 +27,30 @@
   </div>
 </template>
 <script>
-	export default{
-		data(){
-			return{
-				balance:0,
-			  extracting:0,
-			  extracted:0
-			};			
-		},
-		onLoad(){
-			
-		},
-		onShow(){
-			var that=this
-			this.$axios
-          .post("routine/Store/myInfo",{sid:wx.getStorageSync('sid')})
-                .then(function(response) {
-                  console.log(response);
-                  that.balance=response.data.data.balance
-                  that.extracting=response.data.data.extract_ing
-                  that.extracted=response.data.data.extract_ed
-                });
-		},
-		methods:{
-			
-		}
-	}
+export default {
+  data() {
+    return {
+      balance: 0,
+      extracting: 0,
+      extracted: 0,
+      name: NaN
+    };
+  },
+  onLoad() {},
+  onShow() {
+    var that = this;
+    this.$axios
+      .post("routine/Store/myInfo", { sid: wx.getStorageSync("sid") })
+      .then(function(response) {
+        console.log(response);
+        that.balance = response.data.data.balance;
+        that.extracting = response.data.data.extract_ing;
+        that.extracted = response.data.data.extract_ed;
+        that.name = response.data.data.merchant_name;
+      });
+  },
+  methods: {}
+};
 </script>
 <style scoped>
 .touxiang {

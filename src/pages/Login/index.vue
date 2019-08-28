@@ -55,6 +55,7 @@ export default {
   },
   methods: {
     goToHome() {
+      var that = this;
       if (this.phone == "") {
         $Toast({
           content: "手机号码不能为空!",
@@ -79,17 +80,20 @@ export default {
         });
         return false;
       }
-      this.$axios
+      that.$axios
         .post("routine/Logins/login", {
-          user_name: this.phone,
-          user_passwd: this.password
+          user_name: that.phone,
+          user_passwd: that.password
         })
         .then(function(response) {
           wx.setStorageSync("sid", response.data.data.id);
           if (response.data.code == "200") {
-            wx.switchTab({
-              url: "/pages/home/main"
-            });
+            // wx.switchTab({
+            //   url: "/pages/home/main"
+            // });
+            wx.navigateTo({
+               url: "/pages/pingTuan/main"
+            })
           } else {
             wx.showToast({
               title: response.data.msg,

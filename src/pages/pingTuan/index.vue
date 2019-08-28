@@ -11,10 +11,9 @@
 
     <div v-for="(pink,index) in pinks" :key="index">
       <div class="gouWuJie">
-        <span>{{pink.pname}}</span>
-        <span>{{pink.pink_ok==1?'已成功':''}}</span>
+        <p>{{pink.pname}}</p>
+        <span>{{pink.pink_ok==1?'已成功':' '}}</span>
       </div>
-      <div class="border1px"></div>
       <div class="moneyDetail">
         <div class="moneyDetailLeft" @click="GoTogroupDetail(pink.id)">
           <span>{{pink.people}}人团</span>
@@ -33,7 +32,7 @@
           </div>
         </div>
       </div>
-      <div class="clear"></div>
+      <div class="border1px"></div>
     </div>
 
     <img
@@ -111,7 +110,7 @@ export default {
       erweima: "",
       pname: "",
       price: 0,
-      people: 0
+      people: 0,
     };
   },
   onLoad() {
@@ -135,7 +134,7 @@ export default {
           that.price = response.data.data.price;
           that.people = response.data.data.people;
           wx.showLoading({
-            title: "数据加载中...",
+            title: "海报生成中...",
             mask: true
           });
           // var bg1 =
@@ -150,15 +149,13 @@ export default {
             src: response.data.data.picture,
             success: function(res) {
               that.productimg = res.path;
-
-              that.downLoadImg();
-            }
-          });
-          wx.getImageInfo({
-            src: response.data.data.poster,
-            success: function(res) {
-              that.erweima = res.path;
-              that.downLoadImg();
+              wx.getImageInfo({
+                src: response.data.data.poster,
+                success: function(res) {
+                  that.erweima = res.path;
+                  that.downLoadImg();
+                }
+              });
             }
           });
           // setTimeout(function() {
@@ -219,7 +216,14 @@ export default {
       this.isShow = false;
     },
     hebing(cid, bg) {
+      var abc=NaN
+      wx.getSystemInfo({
+        success: res => {
+          abc = 375/res.windowWidth;
+        }
+      });
       const ctx = wx.createCanvasContext(cid);
+      ctx.scale(abc,abc);
       ctx.drawImage(bg, 0, 0, 300, 450);
       ctx.clearRect(15, 100, 270, 320);
       ctx.drawImage(this.productimg, 30, 110, 240, 180);
@@ -334,9 +338,10 @@ export default {
   line-height: 49px;
   font-size: 15px;
   color: #333333;
+  text-align: left;
 }
-.gouWuJie span:nth-child(1) {
-  float: left;
+.gouWuJie p {
+  text-align: left;
   margin-left: 15px;
 }
 .gouWuJie span:nth-child(2) {

@@ -92,14 +92,7 @@
 export default {
   data() {
     return {
-      swipers: [
-        // {
-        //   image_src: "https://www.zhengzhicheng.cn/pyg/banner1.png",
-        //   open_type: "navigate",
-        //   goods_id: 129,
-        //   navigator_url: "/pages/goods_detail/main?goods_id=129"
-        // }     
-      ],
+      swipers: [],
       visible1: false,
       actions1: [
         {
@@ -243,8 +236,8 @@ swiper {
   height: 126px;
 }
 swiper image {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  text-align: center;
 }
 .shopping > div {
   float: left;
