@@ -2,7 +2,7 @@
   <div id="body">
     <div class="serabblePeople">
       <div class="serabblePeople_Left">
-        <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+        <img src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png" alt />
         <span>美琪</span>
         <i>4人团</i>
       </div>
@@ -11,7 +11,7 @@
     <div class="border1px"></div>
     <div class="serabblePeople">
       <div class="serabblePeople_Left">
-        <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+        <img src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png" alt />
         <span>美琪</span>
         <i>2人团</i>
       </div>
@@ -20,7 +20,7 @@
     <div class="border1px"></div>
     <div class="serabblePeople">
       <div class="serabblePeople_Left">
-        <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+        <img src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png" alt />
         <span>美琪</span>
         <i>100人团</i>
       </div>
@@ -29,7 +29,7 @@
     <div class="border1px"></div>
     <div class="serabblePeople">
       <div class="serabblePeople_Left">
-        <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+        <img src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png" alt />
         <span>美琪</span>
         <i>400人团</i>
       </div>
@@ -38,7 +38,7 @@
     <div class="border1px"></div>
     <div class="serabblePeople">
       <div class="serabblePeople_Left">
-        <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+        <img src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png" alt />
         <span>美琪</span>
         <i>4000人团</i>
       </div>
@@ -47,7 +47,7 @@
     <div class="border1px"></div>
     <div class="serabblePeople">
       <div class="serabblePeople_Left">
-        <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+        <img src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png" alt />
         <span>美琪</span>
         <i>40000人团</i>
       </div>
@@ -56,7 +56,7 @@
     <div class="border1px"></div>
     <div class="serabblePeople">
       <div class="serabblePeople_Left">
-        <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+        <img src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png" alt />
         <span>美琪</span>
         <i>4人团</i>
       </div>

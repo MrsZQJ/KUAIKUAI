@@ -2,12 +2,12 @@
   <div id="body">
     <div class="title">请输入绑定的手机号码</div>
     <div class="shu">
-      <img src="../../../static/images/手机@2x.png" alt />
+      <img src="https://www.meifuyihao.com/public/uploads/images/%E6%89%8B%E6%9C%BA@2x.png" alt />
       <span>手机号码</span>
     </div>
     <input class="ipt" type="number" placeholder="请输入手机号码" v-model="phone" />
     <div class="shu">
-      <img src="../../../static/images/验证码@2x.png" alt />
+      <img src="https://www.meifuyihao.com/public/uploads/images/%E9%AA%8C%E8%AF%81%E7%A0%81@2x.png" alt />
       <span>验证码</span>
     </div>
     <div class="por">

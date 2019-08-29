@@ -1,103 +1,44 @@
 <template>
   <div id="body">
-  	
-  	<template v-for="pink in pinks">
-    <div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img :src="pink.avatar" alt />
-        <span>{{pink.pname}}</span>
-        <i>{{pink.people}}人团</i>
+    <div v-for="(pink,index) in pinks" :key="index">
+      <div class="serabblePeople">
+        <div class="serabblePeople_Left">
+          <img :src="pink.avatar" alt />
+          <span>{{pink.pname}}</span>
+          <i>{{pink.people}}人团</i>
+        </div>
+        <div class="serabblePeople_Right">{{pink.pink==1?'已成团':'未成团'}}</div>
       </div>
-      <div class="serabblePeople_Right">{{pink.pink==1?'已成团':'未成团'}}</div>
+      <div class="border1px"></div>
     </div>
-    <div class="border1px"></div>
-   </template>
-    <!--<div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img src="../../../static/images/user.png" alt />
-        <span>美琪</span>
-        <i>2人团</i>
-      </div>
-      <div class="serabblePeople_Right">已成团</div>
-    </div>
-    <div class="border1px"></div>
-    <div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img src="../../../static/images/user.png" alt />
-        <span>美琪</span>
-        <i>100人团</i>
-      </div>
-      <div class="serabblePeople_Right">已成团</div>
-    </div>
-    <div class="border1px"></div>
-    <div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img src="../../../static/images/user.png" alt />
-        <span>美琪</span>
-        <i>400人团</i>
-      </div>
-      <div class="serabblePeople_Right">已成团</div>
-    </div>
-    <div class="border1px"></div>
-    <div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img src="../../../static/images/user.png" alt />
-        <span>美琪</span>
-        <i>4000人团</i>
-      </div>
-      <div class="serabblePeople_Right">已成团</div>
-    </div>
-    <div class="border1px"></div>
-    <div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img src="../../../static/images/user.png" alt />
-        <span>美琪</span>
-        <i>40000人团</i>
-      </div>
-      <div class="serabblePeople_Right">已成团</div>
-    </div>
-    <div class="border1px"></div>
-    <div class="serabblePeople">
-      <div class="serabblePeople_Left">
-        <img src="../../../static/images/user.png" alt />
-        <span>美琪</span>
-        <i>4人团</i>
-      </div>
-      <div class="serabblePeople_Right">已成团</div>
-    </div>
-    <div class="border1px"></div>-->
-
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      pinks:[]
+      pinks: []
     };
   },
-  onLoad(options){
-  	var that=this;
-  	console.log(options.pid)
-         this.$axios
-              .post("routine/Users/combination_detail", {
-                    'openid':wx.getStorageSync('openid'),id:options.pid
-                  })
-                  .then(function(response) {
-                                        
-                    that.pinks=response.data.data.pink
-                  });
+  onLoad(options) {
+    var that = this;
+    console.log(options.pid);
+    this.$axios
+      .post("routine/Users/combination_detail", {
+        openid: wx.getStorageSync("openid"),
+        id: options.pid
+      })
+      .then(function(response) {
+        that.pinks = response.data.data.pink;
+      });
   }
 };
 </script>     
 <style scoped>
- 
- 
 .serabblePeople {
   width: 750rpx;
   height: 60px;
   position: relative;
- 
 }
 .serabblePeople .serabblePeople_Left {
   float: left;
@@ -115,7 +56,6 @@ export default {
   color: #333333;
   font-size: 15px;
   line-height: 60px;
-  
 }
 .serabblePeople .serabblePeople_Left i {
   /* width: 35px; */

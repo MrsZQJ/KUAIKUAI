@@ -1,6 +1,5 @@
 <template>
   <div id="body">
-    <!-- <img class="card" src="../../../static/images/小程序美达达图标/银行卡/建设银行卡@2x.png" alt /> -->
     <div class="card" @click="showBox">
       <p>{{realname}}</p>
       <p>{{bankcode}}</p>
@@ -31,7 +30,10 @@
       <div v-for="(card,index) in cards" :key="index">
         <div class="border1px"></div>
         <div class="two" @click="select(card.bid)">
-          <img src="../../../static/images/图标/图标/mima_icon@2x.png" alt />
+          <img
+            src="https://www.meifuyihao.com/public/uploads/images/%E5%9B%BE%E6%A0%87/%E5%9B%BE%E6%A0%87/mima_icon@2x.png"
+            alt
+          />
           <span>{{card.real_name}}({{card.bank_code}})</span>
         </div>
       </div>
@@ -101,7 +103,7 @@ export default {
           icon: "none",
           duration: 1000
         });
-        return
+        return;
       }
       if (that.extractprice == 0) {
         wx.showToast({
@@ -109,7 +111,7 @@ export default {
           icon: "none",
           duration: 1000
         });
-        return
+        return;
       }
       if (that.extractprice > that.available) {
         wx.showToast({

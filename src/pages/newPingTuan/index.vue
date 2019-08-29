@@ -1,31 +1,36 @@
 <template>
   <div id="body">
-    <i-input v-model="namePingTuan" right title="拼团活动名称" placeholder="请填写拼团名称" maxlength="20" @change="name"/>
+    <i-input
+      v-model="namePingTuan"
+      right
+      title="拼团活动名称"
+      placeholder="请填写拼团名称"
+      maxlength="20"
+      @change="name"
+    />
     <div class="border1px"></div>
     <div class="changeTime" @click="startTime">
       <span>拼团开始时间</span>
       <span>{{currentDate1}}</span>
-      
     </div>
     <div class="changeTime" @click="endTime">
-    	<span>拼团结束时间</span>
-    	<span>{{currentDate2}}</span>
+      <span>拼团结束时间</span>
+      <span>{{currentDate2}}</span>
     </div>
     <div class="border1px"></div>
     <div class="chooseNum">
       <p>拼团人数</p>
       <div class="box">
         <div>
-          <input maxlength="4" type="text" placeholder="0" v-model="people">
+          <input maxlength="4" type="text" placeholder="0" v-model="people" />
           <i>|</i>
           <span>人</span>
         </div>
         <div>
-          <input type="text" maxlength="4" placeholder="0" v-model="price">
+          <input type="text" maxlength="4" placeholder="0" v-model="price" />
           <i>|</i>
           <span>元</span>
         </div>
-        <!--<img src="../../../static/images/小程序美达达图标/新建拼团/xj_icon@2x.png" alt />-->
       </div>
     </div>
     <div class="clear"></div>
@@ -35,11 +40,10 @@
     <div class="border1px"></div>
     <div class="border1px"></div>
     <div class="imgJia" @click="topimage">
-      <img src="https://www.meifuyihao.com/public/uploads/images/图标/图标/xj_icon@2x.png" alt />    
+      <img src="https://www.meifuyihao.com/public/uploads/images/图标/图标/xj_icon@2x.png" alt />
       <img class="imgtop" :src="top" v-for="(top,index) in topimgList" :key="index" />
-      
     </div>
-    
+
     <!--<input id="photo" type="file" accept="image/*">-->
     <div class="clear"></div>
     <div class="fuwuDetail">
@@ -47,17 +51,17 @@
       <textarea placeholder="请输入服务详情" v-model="info"></textarea>
       <div class="fuwuImg" @click="fuwuimage">
         <img src="https://www.meifuyihao.com/public/uploads/images/图标/图标/xj_icon@2x.png" alt />
-        <img class="imgfuwu" :src="fuwu" v-for="(fuwu,index) in fuwuimgList" :key="index"  />
+        <img class="imgfuwu" :src="fuwu" v-for="(fuwu,index) in fuwuimgList" :key="index" />
       </div>
     </div>
     <div class="clear"></div>
-    <i-input v-model="num" right title="商品数量" placeholder="请输入商品数量" @change="number" maxlength="11"/>
+    <i-input right title="商品数量" placeholder="请输入商品数量" @change="number" maxlength="11" />
     <div class="border1px"></div>
-    <i-input v-model="shopname" right title="店铺名称" placeholder="请输入店铺名称" @change="shopnm" maxlength="20"/>
+    <i-input right title="店铺名称" placeholder="请输入店铺名称" @change="shopnm" maxlength="20" />
     <div class="border1px"></div>
-    <i-input v-model="address" right title="地址位置" placeholder="请输入详细地址" @change="addr" maxlength="20"/>
+    <i-input right title="地址位置" placeholder="请输入详细地址" @change="addr" maxlength="20" />
     <div class="border1px"></div>
-    <i-input v-model="telNalue" right title="客服电话" placeholder="请输入客服电话" @change="tel" maxlength="20"/>
+    <i-input right title="客服电话" placeholder="请输入客服电话" @change="tel" maxlength="20" />
     <div class="border1px"></div>
     <div class="fuwuDetail">
       <p>参团须知</p>
@@ -87,205 +91,235 @@
   </div>
 </template>
 <script>
-var time = require('../../utils/index.js');
+var time = require("../../utils/index.js");
 export default {
   data() {
     return {
-      cantuanxuzhi:"",
+      cantuanxuzhi: "",
       namePingTuan: "",
-      num:0,
-      address:"",
-      telNalue:"",
+      num: 0,
+      address: "",
+      telNalue: "",
       minDate1: new Date().getTime(),
       maxDate: new Date(2019, 10, 1).getTime(),
       currentDate1: time.formatTime(new Date().getTime()), //用户选择的起始时间
       showStartTime: false, //是否显示开始时间选择框
       currentDate2: time.formatTime(new Date().getTime()), //用户选择的结束时间
-      showEndTime: false, //是否显示结束时间选择框, 
-      imgtop:'',
-      imgfuwu:'',
+      showEndTime: false, //是否显示结束时间选择框,
+      imgtop: "",
+      imgfuwu: "",
       people: NaN,
       price: NaN,
-      shopname:'',
-      info:'',
-      topimgList:[],
-      fuwuimgList:[]
+      shopname: "",
+      info: "",
+      topimgList: [],
+      fuwuimgList: []
     };
   },
   methods: {
-    chanNum(){
+    chanNum() {
       console.log(11111111);
-      
     },
-  	name(e){
-  		this.namePingTuan=e.target.detail.value
-  	},
-  	addr(e){
-  		this.address=e.target.detail.value
-  		console.log(this.address)
-  	},
-  	number(e){
-  		this.num=e.target.detail.value
-  	},
-  	shopnm(e){
-  		this.shopname=e.target.detail.value
-  	},
-  	tel(e){
-  		this.telNalue=e.target.detail.value
-  	},
-  	topimage(){
-  		var that=this
-  		     
-      wx.chooseImage({
-      	sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有  
-      	sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
-      	success: function(res) {
-        // that.data.evalList.push.apply(that.data.evalList, res.tempFilePaths); //数组合并
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-        var tempFilePaths = res.tempFilePaths; //that.data.evalList//
-        //启动上传等待中...  上传提示框
-        wx.showToast({
-          title: '正在上传...',
-          icon: 'loading',
-          mask: true,
-          duration: 10000
-        })
-        // console.log(that.data.evalList) 
-        var uploadImgCount = 0;
-        // console.log(tempFilePaths)
-        //遍历每个图片 去执行uploadFile
-        for (var i = 0, h = tempFilePaths.length; i < h; i++) {
-          // console.log(tempFilePaths[i])
-          wx.uploadFile({
-            url: 'https://www.meifuyihao.com/index.php/routine/Store/uploadimg',//接受文件的url
-            filePath: tempFilePaths[i],//字符串
-            name: 'file',//后台接受的字段名称
-            /*header: {
-              'token': wx.getStorageSync('token')
-            },*/
-            success: function(res) {
-              uploadImgCount++;
-              var data = JSON.parse(res.data);
-               console.log(data.data.url)
-              //that.imgList.push(data.replace(/[\\]/g, '').replace(/\"/g, ""))  //得到的数据添加到imgList中
-              that.topimgList.push(data.data.url)
-               console.log(that.topimgList)
-              //如果是最后一张,则隐藏等待中  
-              if (uploadImgCount == tempFilePaths.length) {
-                wx.hideToast();
-              }
-            },
-            fail: function(res) {
-              console.log(res)
-              wx.hideToast();
-              wx.showModal({
-                title: '错误提示',
-                content: '上传图片失败',
-                showCancel: false,
-                success: function(res) {}
-              })
-            }
-          });
-        }
-      }
-    });
+    name(e) {
+      this.namePingTuan = e.target.detail.value;
+    },
+    addr(e) {
+      this.address = e.target.detail.value;
+      console.log(this.address);
+    },
+    number(e) {
+      this.num = e.target.detail.value;
+    },
+    shopnm(e) {
+      this.shopname = e.target.detail.value;
+    },
+    tel(e) {
+      this.telNalue = e.target.detail.value;
+    },
+    topimage() {
+      var that = this;
 
-  	},
-  	fuwuimage(){
-  		var that=this
-  		     
       wx.chooseImage({
-      	sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有  
-      	sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
-      	success: function(res) {
-        // that.data.evalList.push.apply(that.data.evalList, res.tempFilePaths); //数组合并
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-        var tempFilePaths = res.tempFilePaths; //that.data.evalList//
-        //启动上传等待中...  上传提示框
-        wx.showToast({
-          title: '正在上传...',
-          icon: 'loading',
-          mask: true,
-          duration: 10000
-        })
-        // console.log(that.data.evalList) 
-        var uploadImgCount = 0;
-        // console.log(tempFilePaths)
-        //遍历每个图片 去执行uploadFile
-        for (var i = 0, h = tempFilePaths.length; i < h; i++) {
-          // console.log(tempFilePaths[i])
-          wx.uploadFile({
-            url: 'https://www.meifuyihao.com/index.php/routine/Store/uploadimg',//接受文件的url
-            filePath: tempFilePaths[i],//字符串
-            name: 'file',//后台接受的字段名称
-            /*header: {
+        sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: function(res) {
+          // that.data.evalList.push.apply(that.data.evalList, res.tempFilePaths); //数组合并
+          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          var tempFilePaths = res.tempFilePaths; //that.data.evalList//
+          //启动上传等待中...  上传提示框
+          wx.showToast({
+            title: "正在上传...",
+            icon: "loading",
+            mask: true,
+            duration: 10000
+          });
+          // console.log(that.data.evalList)
+          var uploadImgCount = 0;
+          // console.log(tempFilePaths)
+          //遍历每个图片 去执行uploadFile
+          for (var i = 0, h = tempFilePaths.length; i < h; i++) {
+            // console.log(tempFilePaths[i])
+            wx.uploadFile({
+              url:
+                "https://www.meifuyihao.com/index.php/routine/Store/uploadimg", //接受文件的url
+              filePath: tempFilePaths[i], //字符串
+              name: "file", //后台接受的字段名称
+              /*header: {
               'token': wx.getStorageSync('token')
             },*/
-            success: function(res) {
-              uploadImgCount++;
-              var data = JSON.parse(res.data);
-               console.log(data.data.url)
-              //that.imgList.push(data.replace(/[\\]/g, '').replace(/\"/g, ""))  //得到的数据添加到imgList中
-              that.fuwuimgList.push(data.data.url)
-               console.log(that.fuwuimgList.join())
-              //如果是最后一张,则隐藏等待中  
-              if (uploadImgCount == tempFilePaths.length) {
+              success: function(res) {
+                uploadImgCount++;
+                var data = JSON.parse(res.data);
+                console.log(data.data.url);
+                //that.imgList.push(data.replace(/[\\]/g, '').replace(/\"/g, ""))  //得到的数据添加到imgList中
+                that.topimgList.push(data.data.url);
+                console.log(that.topimgList);
+                //如果是最后一张,则隐藏等待中
+                if (uploadImgCount == tempFilePaths.length) {
+                  wx.hideToast();
+                }
+              },
+              fail: function(res) {
+                console.log(res);
                 wx.hideToast();
-              }
-            },
-            fail: function(res) {
-              console.log(res)
-              wx.hideToast();
-              wx.showModal({
-                title: '错误提示',
-                content: '上传图片失败',
-                showCancel: false,
-                success: function(res) {}
-              })
-            }
-          });
-        }
-      }
-    });
-  	},
-  	publish(){
-  		if(this.pname==""||this.address==""||this.shopname==""||this.cantuanxuzhi==""||this.info==""){
-  			  wx.showToast({
-              				title: '请全部填写',
-              				icon: 'none',
-              				duration: 1000,
-            				})
-  			  return;
-  			 }
-  		if(this.num==0||this.price==0||this.people==0||this.telNalue==""){
-  			   wx.showToast({
-              				title: '请全部填写',
-              				icon: 'none',
-              				duration: 1000,
-            				})
-  			   return;
-  		  }
-  	  		
-  		var that=this
-  		this.$axios
-          .post("routine/Store/addPink",{sid:wx.getStorageSync('sid'),pname:this.namePingTuan,address:that.address,
-                num:this.num,price:this.price,people:this.people,add_time:this.currentDate1,stop_time:this.currentDate2,
-                detail_image:that.fuwuimgList.join(),picture:that.topimgList.join(),shop_name:that.shopname,notice:this.cantuanxuzhi,info:this.info,
-                service_tel:this.telNalue,directions:' '})
-                .then(function(response) {
-                  console.log(response);                  
-                  wx.showToast({
-              				title: response.data.msg,
-              				icon: 'none',
-              				duration: 1000,
-            				})	
-            				
-                    wx.navigateTo({
-        							url: "/pages/pingTuan/main"
-      								});
-                  
+                wx.showModal({
+                  title: "错误提示",
+                  content: "上传图片失败",
+                  showCancel: false,
+                  success: function(res) {}
                 });
-  	},
+              }
+            });
+          }
+        }
+      });
+    },
+    fuwuimage() {
+      var that = this;
+
+      wx.chooseImage({
+        sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: function(res) {
+          // that.data.evalList.push.apply(that.data.evalList, res.tempFilePaths); //数组合并
+          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          var tempFilePaths = res.tempFilePaths; //that.data.evalList//
+          //启动上传等待中...  上传提示框
+          wx.showToast({
+            title: "正在上传...",
+            icon: "loading",
+            mask: true,
+            duration: 10000
+          });
+          // console.log(that.data.evalList)
+          var uploadImgCount = 0;
+          // console.log(tempFilePaths)
+          //遍历每个图片 去执行uploadFile
+          for (var i = 0, h = tempFilePaths.length; i < h; i++) {
+            // console.log(tempFilePaths[i])
+            wx.uploadFile({
+              url:
+                "https://www.meifuyihao.com/index.php/routine/Store/uploadimg", //接受文件的url
+              filePath: tempFilePaths[i], //字符串
+              name: "file", //后台接受的字段名称
+              /*header: {
+              'token': wx.getStorageSync('token')
+            },*/
+              success: function(res) {
+                uploadImgCount++;
+                var data = JSON.parse(res.data);
+                console.log(data.data.url);
+                //that.imgList.push(data.replace(/[\\]/g, '').replace(/\"/g, ""))  //得到的数据添加到imgList中
+                that.fuwuimgList.push(data.data.url);
+                console.log(that.fuwuimgList.join());
+                //如果是最后一张,则隐藏等待中
+                if (uploadImgCount == tempFilePaths.length) {
+                  wx.hideToast();
+                }
+              },
+              fail: function(res) {
+                console.log(res);
+                wx.hideToast();
+                wx.showModal({
+                  title: "错误提示",
+                  content: "上传图片失败",
+                  showCancel: false,
+                  success: function(res) {}
+                });
+              }
+            });
+          }
+        }
+      });
+    },
+    publish() {
+      if (
+        this.pname == "" ||
+        this.address == "" ||
+        this.shopname == "" ||
+        this.cantuanxuzhi == "" ||
+        this.info == ""
+      ) {
+        wx.showToast({
+          title: "请全部填写",
+          icon: "none",
+          duration: 1000
+        });
+        return;
+      }
+      if (
+        this.num == 0 ||
+        this.price == 0 ||
+        this.people == 0 ||
+        this.telNalue == ""
+      ) {
+        wx.showToast({
+          title: "请全部填写",
+          icon: "none",
+          duration: 1000
+        });
+        return;
+      }
+      if (!/^1[3456789]\d{9}$/.test(this.telNalue)) {
+        wx.showToast({
+          title: "电话格式不符",
+          icon: "none",
+          duration: 1000
+        });
+        return false;
+      }
+      var that = this;
+      this.$axios
+        .post("routine/Store/addPink", {
+          sid: wx.getStorageSync("sid"),
+          pname: this.namePingTuan,
+          address: that.address,
+          num: this.num,
+          price: this.price,
+          people: this.people,
+          add_time: this.currentDate1,
+          stop_time: this.currentDate2,
+          detail_image: that.fuwuimgList.join(),
+          picture: that.topimgList.join(),
+          shop_name: that.shopname,
+          notice: this.cantuanxuzhi,
+          info: this.info,
+          service_tel: this.telNalue,
+          directions: " "
+        })
+        .then(function(response) {
+          console.log(response);
+          wx.showToast({
+            title: response.data.msg,
+            icon: "none",
+            duration: 1000
+          });
+
+          wx.navigateTo({
+            url: "/pages/pingTuan/main"
+          });
+        });
+    },
     //点击取消关闭开始时间选择框
     inStartClose() {
       this.showStartTime = false;
@@ -298,7 +332,7 @@ export default {
     closeTimeChange() {
       this.showStartTime = false;
     },
-    closeTimeChange2(){
+    closeTimeChange2() {
       this.showEndTime = false;
     },
     // 更新用户开始时间选择
@@ -330,9 +364,6 @@ export default {
 </script>
 
 <style scoped>
- 
-  
-   
 .changeTime {
   width: 375px;
   height: 49px;
@@ -390,21 +421,20 @@ export default {
   text-align: center;
   color: #333333;
   font-size: 12px;*/
- position: absolute;
+  position: absolute;
   left: 80%;
   transform: translate(-50%);
-  top: 5px;
+  top: 2px;
   font-size: 15px;
-  
 }
 .box div i {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  top: 5px;
+  top: 3px;
   font-size: 10px;
 }
-.box div input{
+.box div input {
   text-align: center;
   width: 43px;
 }
@@ -454,17 +484,16 @@ export default {
   height: 58px;
   margin: 5px;
 }
-.last{
+.last {
   display: block;
   width: 329px;
   height: 42px;
-  background-color: #2287FF;
+  background-color: #2287ff;
   border-radius: 66px;
   margin: 39px auto;
   margin-bottom: 30px;
-  color:#FEFEFE;
+  color: #fefefe;
   text-align: center;
   line-height: 42px;
-  
 }
 </style>

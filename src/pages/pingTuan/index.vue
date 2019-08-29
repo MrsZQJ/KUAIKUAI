@@ -49,8 +49,8 @@
       :show="isShow"
       show-cancel-button
       confirm-button-open-type="getUserInfo"
-      @close="cancelIn"
-      @confirm="confirmIn"
+      @close="cancelIns"
+      @confirm="confirmIns"
     >
       <swiper
         :indicator-dots="indicatorDots"
@@ -58,6 +58,7 @@
         :interval="interval"
         :duration="duration"
         style="height:450px"
+        @change="chang"
       >
         <swiper-item>
           <canvas
@@ -111,6 +112,11 @@ export default {
       pname: "",
       price: 0,
       people: 0,
+      current: 0,
+      bg1: NaN,
+      bg2: NaN,
+      bg3: NaN,
+      bg4: NaN
     };
   },
   onLoad() {
@@ -120,6 +126,7 @@ export default {
       .then(function(response) {
         that.pinks = response.data.data;
       });
+    that.downLoadImg();
   },
   methods: {
     haibao(pid) {
@@ -137,93 +144,73 @@ export default {
             title: "海报生成中...",
             mask: true
           });
-          // var bg1 =
-          //   "https://www.meifuyihao.com/public/uploads/images/bgd/11@2x.png";
-          // var bg2 =
-          //   "https://www.meifuyihao.com/public/uploads/images/bgd/22@2x.png";
-          // var bg3 =
-          //   "https://www.meifuyihao.com/public/uploads/images/bgd/33@2x.png";
-          // var bg4 =
-          //   "https://www.meifuyihao.com/public/uploads/images/bgd/44@2x.png";
           wx.getImageInfo({
-            src: response.data.data.picture,
+            src: response.data.data.poster,
             success: function(res) {
-              that.productimg = res.path;
+              that.erweima = res.path;
               wx.getImageInfo({
-                src: response.data.data.poster,
+                src: response.data.data.picture,
                 success: function(res) {
-                  that.erweima = res.path;
-                  that.downLoadImg();
+                  that.productimg = res.path;
+                  that.hebing("myCanvas1", that.bg1);
+                  that.hebing("myCanvas2", that.bg2);
+                  that.hebing("myCanvas3", that.bg3);
+                  that.hebing("myCanvas4", that.bg4);
+                  that.isShow = true;
+                  wx.hideLoading();
                 }
               });
             }
           });
-          // setTimeout(function() {
-          // console.log(that.erweima);
-          // console.log(that.productimg);
-          // that.hebing("myCanvas1", bg1);
-          // that.hebing("myCanvas2", bg2);
-          // that.hebing("myCanvas3", bg3);
-          // that.hebing("myCanvas4", bg4);
-          // }, 3000);
-
-          /*that.hebing("myCanvas1",bg1);
-      						that.hebing("myCanvas2",bg2);
-      						that.hebing("myCanvas3",bg3);
-      						that.hebing("myCanvas4",bg4);
-     							that.isShow = true;*/
         });
     },
     downLoadImg() {
-      var bg1 = NaN,
-        that = this,
-        bg2 = NaN,
-        bg3 = NaN,
-        bg4 = NaN;
+      var that = this;
       wx.getImageInfo({
         src: "https://www.meifuyihao.com/public/uploads/images/bgd/11@2x.png",
         success: function(res) {
-          bg1 = res.path;
-          that.hebing("myCanvas1", bg1);
+          that.bg1 = res.path;
         }
       });
       wx.getImageInfo({
         src: "https://www.meifuyihao.com/public/uploads/images/bgd/22@2x.png",
         success: function(res) {
-          bg2 = res.path;
-          that.hebing("myCanvas2", bg2);
+          that.bg2 = res.path;
         }
       });
       wx.getImageInfo({
         src: "https://www.meifuyihao.com/public/uploads/images/bgd/33@2x.png",
         success: function(res) {
-          bg3 = res.path;
-          that.hebing("myCanvas3", bg3);
+          that.bg3 = res.path;
         }
       });
       wx.getImageInfo({
         src: "https://www.meifuyihao.com/public/uploads/images/bgd/44@2x.png",
         success: function(res) {
-          bg4 = res.path;
-          that.hebing("myCanvas4", bg4);
-          wx.hideLoading();
-          that.isShow = true;
+          that.bg4 = res.path;
         }
       });
     },
-    confirmIn() {},
-    cancelIn() {
+    cancelIns(e) {
       this.isShow = false;
     },
+    confirmIns() {
+      var as = this.current + 1;
+      this.save(as);
+      this.isShow = false;
+    },
+    chang(e) {
+      this.current = e.mp.detail.current;
+    },
     hebing(cid, bg) {
-      var abc=NaN
+      var abc = NaN;
       wx.getSystemInfo({
         success: res => {
-          abc = 375/res.windowWidth;
+          abc = 375 / res.windowWidth;
         }
       });
       const ctx = wx.createCanvasContext(cid);
-      ctx.scale(abc,abc);
+      ctx.scale(abc, abc);
       ctx.drawImage(bg, 0, 0, 300, 450);
       ctx.clearRect(15, 100, 270, 320);
       ctx.drawImage(this.productimg, 30, 110, 240, 180);
@@ -235,7 +222,7 @@ export default {
       ctx.fillText("￥" + this.price, 30, 360);
       ctx.setFillStyle("#369599");
       ctx.setFontSize(12);
-      ctx.fillText(this.people + "人团", 115, 357);
+      ctx.fillText(this.people + "人团", 110, 357);
       ctx.setFillStyle("#d6d1d7");
       ctx.setFontSize(10);
       ctx.fillText("长按识别小程序码查看商品", 30, 380);
@@ -290,13 +277,16 @@ export default {
       );
     },
     save(cid) {
-      this.shengc("myCanvas1");
+      this.shengc("myCanvas" + cid);
     }
   }
 };
 </script>
 
 <style scoped>
+.border1px {
+  height: 3px !important;
+}
 .asd {
   margin: 0px auto;
   width: 300px;
@@ -338,10 +328,10 @@ export default {
   line-height: 49px;
   font-size: 15px;
   color: #333333;
-  text-align: left;
+  text-align: left !important;
 }
 .gouWuJie p {
-  text-align: left;
+  text-align: left !important;
   margin-left: 15px;
 }
 .gouWuJie span:nth-child(2) {

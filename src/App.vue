@@ -20,6 +20,7 @@
   background-color: #fff5f5f5;
 }
 .border1px {
+  width: 100%;
   height: 1px;
   background-color: #f5f5f5;
 }

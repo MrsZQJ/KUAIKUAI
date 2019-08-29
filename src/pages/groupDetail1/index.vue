@@ -9,11 +9,12 @@
       indicator-active-color="#ffffff"
       circular
       @change="asdf"
+      :style="{height:imgheights+'px !important' }"
     >
       <block v-for="(item,index) in swipers" :key="index">
         <!-- <navigator> -->
         <swiper-item>
-          <img :src="item.imagesrc" mode='widthFix' />
+          <img :src="item" mode="widthFix" @load="dfg" />
         </swiper-item>
         <!-- </navigator> -->
       </block>
@@ -72,7 +73,7 @@
     <div class="clear"></div>
     <i-cell title="正在拼团的小伙伴" is-link only-tap-footer></i-cell>
 
-    <template v-for="(pink,index) in pinks" v-if="index<=1">
+    <div v-for="(pink,index) in pinks" v-if="index<=1" :key="index">
       <div class="border1px"></div>
       <div class="serabblePeople">
         <div class="serabblePeople_Left">
@@ -82,12 +83,34 @@
         </div>
         <div class="serabblePeople_Right">{{pink.pink==1?'已成团':'未成团'}}</div>
       </div>
-    </template>
+    </div>
 
     <div class="clear"></div>
     <div class="datail">
       <p>服务详情</p>
+      <div class="border1px"></div>
       <span>{{serviceinfo}}</span>
+      <img
+        :style="{height:comNum[idx]+'px !important' }"
+        :src="val"
+        v-for="(val,idx) in detail_image"
+        :key="idx"
+        @load="uiop"
+      />
+    </div>
+    <div class="clear"></div>
+    <div class="datail">
+      <p>参团须知</p>
+      <div class="border1px"></div>
+      <span>{{notice}}</span>
+    </div>
+    <div class="clear"></div>
+    <div class="datail">
+      <p>商家信息</p>
+      <div class="border1px"></div>
+      <p>名称: {{shop_name}}</p>
+      <p>地址: {{address}}</p>
+      <p>电话: {{tel}}</p>
     </div>
     <!--<div class="footFix">¥{{price}}</div>-->
     <i-action-sheet
@@ -107,14 +130,7 @@
 export default {
   data() {
     return {
-      swipers: [
-        // {
-        //   image_src: "https://www.zhengzhicheng.cn/pyg/banner1.png",
-        //   open_type: "navigate",
-        //   goods_id: 129,
-        //   navigator_url: "/pages/goods_detail/main?goods_id=129"
-        // }
-      ],
+      swipers: [],
       visible1: false,
       actions1: [
         {
@@ -134,15 +150,23 @@ export default {
       storeid: 0,
       price: 0,
       pname: "",
-      people: 0
+      people: 0,
+      imgheights: [],
+      current: 0,
+      detail_image: [],
+      comNum: [],
+      notice: [],
+      shop_name: NaN,
+      address:NaN,
+      tel:NaN
     };
   },
   created() {
     this.getLogin();
   },
   onLoad(options) {
-    //console.log(wx.getStorageSync('openid'))
     var that = this;
+    this.comNum = [];
     that.pid = options.pinkid;
     this.$axios
       .post("routine/Store/pink_detail", {
@@ -151,22 +175,22 @@ export default {
       })
       .then(function(response) {
         console.log(response);
+
         that.serviceinfo = response.data.data.storeInfo.info;
         that.pinks = response.data.data.pink;
         that.price = response.data.data.storeInfo.price;
         that.pname = response.data.data.storeInfo.pname;
         that.people = response.data.data.storeInfo.people;
+        that.notice = response.data.data.storeInfo.notice;
+        that.shop_name = response.data.data.storeInfo.shop_name;
+        that.address = response.data.data.storeInfo.address;
+        that.tel = response.data.data.storeInfo.tel;
+        // that.detail_image = response.data.data.storeInfo.detail_image
+        var detail_image = response.data.data.storeInfo.detail_image;
         var pictures = response.data.data.storeInfo.picture;
-        var arr = pictures.split(",");
-        for (var i = 0; i < arr.length; i++) {
-          var obj = new Object();
-          obj.imagesrc = arr[i];
-          that.swipers.push(obj);
-        }
-
-        //console.log(response.data.data.storeInfo.picture)
+        that.swipers = pictures.split(",");
+        that.detail_image = detail_image.split(",");
       });
-    //console.log(options.pinkid);
   },
   methods: {
     getLogin() {
@@ -175,25 +199,8 @@ export default {
           //session_key 未过期，并且在本生命周期一直有效
         },
         fail() {
-          // session_key 已经失效，需要重新执行登录流程
           var appId = "wx07fe5775ac46e374";
           var secret = "2580adb6d939538a49dc45b79326d0a6";
-          /*wx.login({
-            success: res => {
-              if (res.code) {
-                this.$axios
-                  .post("routine/logins/setCode", {
-                    "info[code]": "043QdsyS1COd1613IkxS1cTgyS1QdsyE"
-                  })
-                  .get('https://api.weixin.qq.com/sns/jscode2session?appid=' + appId + '&secret=' + secret + '&js_code=' + code + '&grant_type=authorization_code')
-                  .then(function(response) {
-                    console.log(response);
-                  });
-              } else {
-                console.log(res.errMsg);
-              }
-            }
-          });*/
         }
       });
     },
@@ -225,7 +232,6 @@ export default {
       });
     },
     handleClickItem(e) {
-      // console.log(e.currentTarget.dataset.index);
       // if(e.currentTarget.dataset.index==1){
       this.visible1 = false;
       this.setAdd();
@@ -236,34 +242,22 @@ export default {
         this.addXiao = false;
       }, 5000);
     },
-    setContainerHeight(e) {
-      //图片的原始宽度
-      console.log(e);
-      
-      var imgWidth = e.detail.width;
-
-      //图片的原始高度
-      var imgHeight = e.detail.height;
-
-      //同步获取设备宽度
-      var sysInfo = wx.getSystemInfoSync();
-      console.log("sysInfo:", sysInfo);
-
-      //获取屏幕的宽度
-      var screenWidth = sysInfo.screenWidth;
-
-      //获取屏幕和原图的比例
-      var scale = screenWidth / imgWidth;
-
-      //设置容器的高度
-      this.setData({
-        height: imgHeight * scale
-      });
-      console.log(this.data.height);
+    asdf(e) {
+      this.current = e.mp.detail.current;
     },
-    asdf(e){
-      console.log(e);
-      
+    dfg(e) {
+      var imgheight = e.mp.detail.height,
+        arr = [],
+        imgwidth = e.mp.detail.width,
+        ratio = imgwidth / imgheight;
+      //计算的高度值
+      var viewHeight = 375 / ratio;
+      var imgheight = viewHeight;
+      arr.push(imgheight);
+      this.imgheights = Math.max(arr);
+    },
+    uiop(e) {
+      this.comNum.push(375 / e.mp.detail.width * e.mp.detail.height);
     }
   }
 };
@@ -290,7 +284,7 @@ export default {
   background-color: #ffffff;
 }
 swiper {
-  text-align: center;
+  text-align: center !important;
 }
 swiper image {
 }
@@ -330,7 +324,7 @@ swiper image {
   position: absolute;
   color: #c7c7cc;
   top: 17px;
-  left: 85px;
+  left: 110px;
 }
 .serabble {
   width: 690rpx;
@@ -415,7 +409,7 @@ swiper image {
   line-height: 60px;
 }
 .datail {
-  padding: 0 24px 60px 15px;
+  padding: 0 15px 30px 15px;
 }
 .datail p {
   margin-top: 3px;
@@ -426,6 +420,9 @@ swiper image {
 .datail span {
   font-size: 14px;
   color: #666666;
+}
+.datail img {
+  width: 100% !important;
 }
 .footFix {
   color: #ffffff;

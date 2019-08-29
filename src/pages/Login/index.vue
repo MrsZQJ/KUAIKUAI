@@ -88,12 +88,12 @@ export default {
         .then(function(response) {
           wx.setStorageSync("sid", response.data.data.id);
           if (response.data.code == "200") {
-            // wx.switchTab({
-            //   url: "/pages/home/main"
-            // });
-            wx.navigateTo({
-               url: "/pages/pingTuan/main"
-            })
+            wx.switchTab({
+              url: "/pages/home/main"
+            });
+            // wx.navigateTo({
+            //    url: "/pages/pingTuan/main"
+            // })
           } else {
             wx.showToast({
               title: response.data.msg,

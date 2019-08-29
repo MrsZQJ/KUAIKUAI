@@ -1,7 +1,10 @@
 <template>
   <div id="body">
     <div class="Commodity_Information">
-      <img src="../../../static/images/小程序美达达图标/头像/头像@2x.png" alt />
+      <img
+        src="https://www.meifuyihao.com/public/uploads/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BE%8E%E8%BE%BE%E8%BE%BE%E5%9B%BE%E6%A0%87/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F@2x.png"
+        alt
+      />
       <div class="CommodityText">
         <p>购物节</p>
         <p>¥100.00</p>
@@ -14,7 +17,7 @@
     <div class="border1px"></div>
     <!-- <i-cell title="微信支付">
       <i-checkbox slot="footer"></i-checkbox>
-    </i-cell> -->
+    </i-cell>-->
     <i-checkbox position="right" value="微信支付" color="#51c332" checked @click="handleChange"></i-checkbox>
     <div class="border1px"></div>
     <div class="pay_footer">
@@ -41,7 +44,7 @@ export default {
     handleChange() {
       // this.weixinPay=!this.weixinPay
     },
-    paySuccess(){
+    paySuccess() {
       wx.navigateTo({
         url: "/pages/groupRecords/main"
       });
@@ -51,9 +54,6 @@ export default {
 </script>
 
 <style scoped>
- 
- 
- 
 .Commodity_Information {
   width: 750rpx;
   height: 70px;
